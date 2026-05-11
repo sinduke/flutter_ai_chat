@@ -87,6 +87,13 @@ task has evidence that the simpler stage is no longer enough.
 
 - Preserve the ordinary feature-development path and architecture evolution.
 - Keep the Flutter implementation runnable after each Build task.
+- Prefer Cupertino widgets and `package:flutter/cupertino.dart` for app/page UI
+  unless a feature specifically needs Material-only behavior.
+- Every page and meaningful component must include its own official widget
+  preview. Prefer the project wrappers in `lib/common/preview/app_preview.dart`
+  (`@AppPagePreview`, `@AppComponentPreview`) so page/device sizing and
+  Cupertino preview setup stay consistent. Use raw `@Preview(...)` only when a
+  preview needs custom behavior the shared wrappers do not cover.
 - Use mock-first service boundaries for AI, avatar, chat, auth, analytics,
   purchases, experiments, push, and remote content.
 - Keep page widgets free from concrete provider SDK calls.

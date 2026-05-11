@@ -53,7 +53,7 @@ The exact platform target should match the files changed.
 
 | Feature ID | Required Tests | Required Commands/Gates | Required Index Evidence | Status |
 | --- | --- | --- | --- | --- |
-| F-001 | app boots, theme smoke test when source exists | `flutter analyze`, `flutter test` | file/implementation/test indexes | planned |
+| F-001 | app boots, AppPage placeholder toggle smoke test, widget preview annotations analyze cleanly | `flutter analyze`, `flutter test` | file/implementation/test indexes | passing |
 | F-002 | source commit map reviewed against source repo | source `git log` evidence, `./bin/aidev check` | traceability, decision/risk updates | planned |
 | F-003 | app shell renders tabs, tab selection state | widget test, `flutter test` | route/state/file indexes | planned |
 | F-004 | onboarding loading/data/action states | controller test, widget test | feature/route/state indexes | planned |
@@ -78,7 +78,21 @@ Status:
 Notes:
 ```
 
-## 6. Critical Negative Tests
+## 6. Current Test Records
+
+```text
+Test ID: TEST-APP-001
+Feature ID: F-001
+Risk Covered: AppPage boots into Onboarding and switches to Tabbar on tap with the expected directional slide transition.
+Test File: test/widget_test.dart
+Command: flutter test
+Expected Evidence: "AppPage switches from onboarding to tabbar on tap" passes.
+Required Before: considering the counter demo replaced by the view-first root shell.
+Status: passing
+Notes: Covers the current placeholder shell only; real auth, tab routes, and tab content remain later tasks. The widget test checks the mid-transition ordering for the horizontal slide effect. `flutter analyze` also validates the current shared preview annotations compile.
+```
+
+## 7. Critical Negative Tests
 
 These negative paths are required before related features can be considered
 verified:
@@ -90,7 +104,7 @@ verified:
 - Developer settings are not exposed in production unless explicitly allowed.
 - Remote provider failure maps to a safe user-facing error.
 
-## 7. Review Rules
+## 8. Review Rules
 
 For every Build task:
 

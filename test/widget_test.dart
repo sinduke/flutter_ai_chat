@@ -1,30 +1,44 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_ai_chat/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('AppPage switches from onboarding to tabbar on tap', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Onboarding'), findsOneWidget);
+    expect(find.text('Tabbar'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.tap(find.text('Onboarding'));
+    await tester.pump(const Duration(milliseconds: 175));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Onboarding'), findsOneWidget);
+    expect(find.text('Tabbar'), findsOneWidget);
+    expect(
+      tester.getCenter(find.text('Onboarding')).dx,
+      lessThan(tester.getCenter(find.text('Tabbar')).dx),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Onboarding'), findsNothing);
+    expect(find.text('Tabbar'), findsOneWidget);
+
+    await tester.tap(find.text('Tabbar'));
+    await tester.pump(const Duration(milliseconds: 175));
+
+    expect(find.text('Onboarding'), findsOneWidget);
+    expect(find.text('Tabbar'), findsOneWidget);
+    expect(
+      tester.getCenter(find.text('Onboarding')).dx,
+      lessThan(tester.getCenter(find.text('Tabbar')).dx),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Onboarding'), findsOneWidget);
+    expect(find.text('Tabbar'), findsNothing);
   });
 }

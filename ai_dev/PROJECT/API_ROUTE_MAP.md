@@ -36,7 +36,7 @@ Notes:
 
 | Route ID | Type | Path / Name | Auth / Entitlement | Input | Output | Handler / Controller | Feature | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ROUTE-APP-001 | ui_route | `/` | none | none | app shell | app router | F-001 | planned |
+| ROUTE-APP-001 | ui_route | `/` | none | none | AppPage root shell | AppPage | F-001 | implemented |
 | ROUTE-TAB-001 | ui_route | `/welcome` | none | none | WelcomePage | onboarding | F-004 | planned |
 | ROUTE-TAB-002 | ui_route | `/explore` | none | none | ExplorePage | explore | F-005 | planned |
 | ROUTE-TAB-003 | ui_route | `/chats` | none | none | ChatsPage | chats | F-006 | planned |

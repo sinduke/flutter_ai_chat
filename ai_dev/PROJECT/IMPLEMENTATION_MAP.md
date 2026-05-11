@@ -10,18 +10,25 @@ Every task that adds, moves, or deletes source files must update this file.
 
 ## 2. Current Implementation Status
 
-Status: Flutter starter plus ai_dev Flutter AI Chat preset.
+Status: Flutter view-first root page plus ai_dev Flutter AI Chat preset.
 
 Current app source:
 
 ```text
 lib/main.dart
+lib/core/app_page.dart
 lib/common/design/app_colors.dart
 lib/common/design/app_radii.dart
 lib/common/design/app_spacing.dart
 lib/common/design/app_theme.dart
 lib/common/design/app_typography.dart
 lib/common/design/design.dart
+```
+
+Current tests:
+
+```text
+test/widget_test.dart
 ```
 
 Current ai_dev preset and project docs:
@@ -83,6 +90,15 @@ provider SDK calls.
 
 Do not create every foundation area up front. Add each area when the current
 architecture stage and task evidence justify it.
+
+Currently implemented foundation coverage:
+
+```text
+lib/main.dart -> CupertinoApp bootstrap with shared colors and AppPage home.
+lib/common/preview/app_preview.dart -> shared Cupertino widget preview wrapper and default page/component preview sizes.
+lib/core/app_page.dart -> Cupertino view-first onboarding/tabbar placeholder shell with shared @AppPagePreview entries.
+test/widget_test.dart -> AppPage toggle smoke test.
+```
 
 ## 5. Planned Feature Modules
 

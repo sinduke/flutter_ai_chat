@@ -30,7 +30,22 @@ failed
 | `bootstrapping` | `ready` | dependencies loaded | valid config | render app shell | planned |
 | `bootstrapping` | `failed` | bootstrap error | unrecoverable config error | show safe error/log | planned |
 
-## 4. Chat Generation State
+## 4. AppPage Shell Preview State
+
+This is a temporary local widget state for the first view-first shell. It is not
+the final auth/session state machine.
+
+```text
+onboarding_preview
+tabbar_preview
+```
+
+| From | To | Trigger | Guard | Side Effects | Status |
+| --- | --- | --- | --- | --- | --- |
+| `onboarding_preview` | `tabbar_preview` | user taps AppPage | none | animate onboarding out left while tabbar enters from right | implemented |
+| `tabbar_preview` | `onboarding_preview` | user taps AppPage | none | animate tabbar out right while onboarding enters from left | implemented |
+
+## 5. Chat Generation State
 
 ```text
 idle
@@ -52,7 +67,7 @@ cancelled
 | `sending_user_message`/`waiting_for_ai`/`streaming_ai_reply` | `failed` | service error | retryable/non-retryable mapped | show safe error | planned |
 | `waiting_for_ai`/`streaming_ai_reply` | `cancelled` | user cancels | cancellable operation | stop provider request | planned |
 
-## 5. Entitlement State
+## 6. Entitlement State
 
 ```text
 unknown

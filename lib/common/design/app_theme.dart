@@ -8,7 +8,10 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     final ColorScheme colorScheme =
-        ColorScheme.fromSeed(seedColor: AppColors.primary, brightness: Brightness.light).copyWith(
+        ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
+          brightness: Brightness.light,
+        ).copyWith(
           primary: AppColors.primary,
           secondary: AppColors.secondary,
           surface: AppColors.surface,
@@ -36,7 +39,10 @@ class AppTheme {
     const Color darkTextPrimary = Color(0xFFF1F5F9);
 
     final ColorScheme colorScheme =
-        ColorScheme.fromSeed(seedColor: AppColors.primary, brightness: Brightness.dark).copyWith(
+        ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
+          brightness: Brightness.dark,
+        ).copyWith(
           primary: AppColors.primary,
           secondary: AppColors.secondary,
           surface: darkSurface,

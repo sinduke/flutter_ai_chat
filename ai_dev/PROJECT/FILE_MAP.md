@@ -11,10 +11,11 @@ update whenever files are created, moved, or deleted.
 
 ## 2. Current Status
 
-Status: Flutter starter plus design-token foundation exists.
+Status: Flutter view-first root page plus design-token foundation exists.
 
-The app currently has a Flutter starter entrypoint and shared design files.
-Future tasks should replace the demo counter screen through approved task files.
+The app currently has a Flutter entrypoint, `AppPage` root shell placeholder,
+widget smoke coverage, and shared design files. Future tasks should replace the
+placeholder tabbar/onboarding surfaces through approved task files.
 
 ## 3. Source File Record Template
 
@@ -53,6 +54,7 @@ integration_test/
 | --- | --- | --- |
 | `lib/app/` | App composition | App bootstrap, dependency composition, router, lifecycle. |
 | `lib/common/design/` | Design system | Shared colors, spacing, typography, radii, theme. |
+| `lib/common/preview/` | Preview support | Shared widget preview annotations, wrappers, and default sizing. |
 | `lib/common/widgets/` | Shared UI | Reusable app widgets only. |
 | `lib/common/routing/` | Routing | Shared route models/helpers. |
 | `lib/features/<feature>/presentation/` | Presentation | Pages, widgets, controllers/view models. |
@@ -73,16 +75,61 @@ Path: lib/main.dart
 Feature: app_shell
 Layer: App entrypoint
 Kind: Flutter entrypoint
-Owner Task: pre-ai_dev project setup
-Public Symbols: main, MyApp, MyHomePage
-Depends On: flutter/material.dart, common/design/design.dart
+Owner Task: 001A_app_page_switching_shell
+Public Symbols: main, MyApp
+Depends On: flutter/cupertino.dart, common/design/app_colors.dart, core/app_page.dart
 Referenced By: Flutter runtime
 Related Routes: ROUTE-APP-001
 Related Function IDs: none yet
 Related DTO IDs: none
-Related Tests: none yet
+Related Tests: test/widget_test.dart
 Status: implemented
-Notes: Still contains Flutter counter demo; future foundation task should replace it with the app shell.
+Notes: Boots the Cupertino-themed app and renders AppPage as the home surface.
+
+Path: lib/core/app_page.dart
+Feature: app_shell
+Layer: App shell presentation
+Kind: root page widget
+Owner Task: 001A_app_page_switching_shell
+Public Symbols: AppPage, appPagePreview, onboardingPlaceholderPreview, tabBarPlaceholderPreview, fullScreenPanelPreview
+Depends On: flutter/cupertino.dart, common/design/app_colors.dart, common/preview/app_preview.dart
+Referenced By: lib/main.dart, test/widget_test.dart
+Related Routes: ROUTE-APP-001
+Related Function IDs: none yet
+Related DTO IDs: none
+Related Tests: test/widget_test.dart
+Status: implemented
+Notes: Cupertino view-first placeholder shell with local onboarding/tabbar toggle, directional slide transition, and shared widget previews for the page and placeholder components.
+
+Path: lib/common/preview/app_preview.dart
+Feature: app_shell
+Layer: Preview support
+Kind: shared preview helpers
+Owner Task: 001A_app_page_switching_shell
+Public Symbols: AppPreviewSizes, appPreviewWrapper, AppPagePreview, AppComponentPreview
+Depends On: flutter/cupertino.dart, flutter/widget_previews.dart, common/design/app_colors.dart
+Referenced By: lib/core/app_page.dart and future page/component preview entries
+Related Routes: all UI routes
+Related Function IDs: none yet
+Related DTO IDs: none
+Related Tests: flutter analyze
+Status: implemented
+Notes: Centralizes Cupertino preview wrapping and default page/component preview sizes so each page/component keeps its own preview without repeating boilerplate.
+
+Path: test/widget_test.dart
+Feature: app_shell
+Layer: Tests
+Kind: widget smoke test
+Owner Task: 001A_app_page_switching_shell
+Public Symbols: AppPage switches from onboarding to tabbar on tap test
+Depends On: flutter_test, main.dart
+Referenced By: flutter test
+Related Routes: ROUTE-APP-001
+Related Function IDs: none yet
+Related DTO IDs: none
+Related Tests: self
+Status: implemented
+Notes: Verifies the current AppPage placeholder shell interaction and directional mid-transition state.
 
 Path: lib/common/design/app_colors.dart
 Feature: app_shell
@@ -90,14 +137,14 @@ Layer: Design system
 Kind: color tokens
 Owner Task: pre-ai_dev project setup
 Public Symbols: AppColors
-Depends On: flutter/material.dart
-Referenced By: AppTheme
+Depends On: dart:ui
+Referenced By: AppTheme, AppPage, MyApp
 Related Routes: all UI routes
 Related Function IDs: none
 Related DTO IDs: none
 Related Tests: none yet
 Status: implemented
-Notes: Shared color tokens.
+Notes: Shared color tokens. Uses `dart:ui` only so UI code can consume tokens without importing Material.
 
 Path: lib/common/design/app_radii.dart
 Feature: app_shell
@@ -136,7 +183,7 @@ Kind: Material theme
 Owner Task: pre-ai_dev project setup
 Public Symbols: AppTheme
 Depends On: AppColors, AppTextStyles
-Referenced By: MyApp
+Referenced By: design.dart and future Material surfaces only
 Related Routes: all UI routes
 Related Function IDs: none
 Related DTO IDs: none
@@ -150,7 +197,7 @@ Layer: Design system
 Kind: typography tokens
 Owner Task: pre-ai_dev project setup
 Public Symbols: AppFontFamilies, AppTextStyles
-Depends On: flutter/material.dart
+Depends On: flutter/widgets.dart
 Referenced By: AppTheme
 Related Routes: all UI routes
 Related Function IDs: none

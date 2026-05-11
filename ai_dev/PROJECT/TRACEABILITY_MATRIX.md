@@ -20,7 +20,7 @@ app while preserving architecture evolution.
 
 | Product / Rewrite Goal | Source Evidence | Architecture Stage | Flutter Feature | Routes | Functions / Services | Data Contracts | State / Permission | Observability | Tests | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Establish Flutter app foundation | Flutter project + AIChats template stage | starter -> view-first | F-001 | ROUTE-APP-001 | FN-APP-001, FN-ROUTE-001 when needed | DTO-APP-001 | app boot state | app_started | app boot/theme tests | planned |
+| Establish Flutter app foundation | Flutter project + AIChats template stage | starter -> view-first | F-001 | ROUTE-APP-001 | no public function/service yet | none yet | app boot state, AppPage shell preview state | none yet | TEST-APP-001 | implemented |
 | Map AIChats commit history into rewrite tasks | AIChats git log | documentation/control plane | F-002 | none | source-history workflow | source commit map task data | none | source_step_mapped | review evidence | planned |
 | Build static tab shell | AIChats app shell/tab stages | view-first, MV if tab config repeats | F-003 | ROUTE-TAB-001..004 | local tab state | tab config | tab state | tab_selected | widget test | planned |
 | Build onboarding baseline | AIChats onboarding commits | view-first -> MV/MVVM when actions grow | F-004 | welcome/onboarding | onboarding controller only when needed | onboarding state | onboarding state | onboarding_started/completed | controller/widget tests | planned |

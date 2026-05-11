@@ -44,7 +44,7 @@ Status:
 
 | Feature ID | Name | Actor | Owning Feature | Architecture Stage | Routes | State / Controller | Services | Data | Events | Task | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-001 | Flutter AI Chat foundation | user/system | app_shell, common | starter -> view-first | app root | app bootstrap | local dependencies | theme/design tokens | app_started | 001_flutter_ai_chat_foundation | planned |
+| F-001 | Flutter AI Chat foundation | user/system | app_shell, common | starter -> view-first | app root | AppPage local shell state | local dependencies | theme/design tokens | none yet | 001A_app_page_switching_shell | implemented |
 | F-002 | AIChats source-history map | developer | ai_dev | documentation/control plane | none | none | source history reader | commit map | source_step_mapped | 002_aichats_source_history_map | planned |
 | F-003 | App shell and static tabs | user | app_shell | view-first, possibly MV for tab config | root tabs | local tab state | mock dependencies only if needed | tab config | tab_selected, screen_viewed | 003_app_shell_and_static_tabs | planned |
 | F-004 | Welcome/onboarding baseline | new user | onboarding | view-first -> MV/MVVM when actions grow | welcome/onboarding | local state or controller | mock user/profile when needed | onboarding state | onboarding_started, onboarding_completed | later source rewrite task | planned |
