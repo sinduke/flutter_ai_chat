@@ -1,0 +1,253 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.trimAutoWhitespace": true,
+  "editor.rulers": [
+    100
+  ],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.guides.indentation": true,
+  "editor.minimap.enabled": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.linkedEditing": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.editor.labelFormat": "medium",
+  "breadcrumbs.enabled": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "files.associations": {
+    "*.arb": "json",
+    "*.xcconfig": "properties",
+    "*.podspec": "ruby"
+  },
+  "files.exclude": {
+    "**/.dart_tool": true,
+    "**/.packages": true,
+    "**/build": true,
+    "**/coverage": true,
+    "**/ios/Flutter/Flutter.podspec": true,
+    "**/macos/Flutter/ephemeral": true
+  },
+  "search.exclude": {
+    "**/.dart_tool": true,
+    "**/.pub-cache": true,
+    "**/build": true,
+    "**/coverage": true,
+    "**/ios/Pods": true,
+    "**/macos/Pods": true
+  },
+  "files.watcherExclude": {
+    "**/.dart_tool/**": true,
+    "**/.pub-cache/**": true,
+    "**/build/**": true,
+    "**/coverage/**": true,
+    "**/ios/Pods/**": true,
+    "**/macos/Pods/**": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "pubspec.yaml": "pubspec.lock, analysis_options.yaml",
+    "analysis_options.yaml": ".metadata, .packages",
+    "*.dart": "$(capture).g.dart, $(capture).freezed.dart, $(capture).mocks.dart",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
+    "README.md": "CHANGELOG.md, LICENSE"
+  },
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.scrollback": 20000,
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "warning",
+    "info"
+  ],
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#FF2D00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    },
+    {
+      "tag": "TODO",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    },
+    {
+      "tag": "FIXME",
+      "color": "#E74C3C",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    },
+    {
+      "tag": "NOTE",
+      "color": "#2ECC71",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    }
+  ],
+  "todo-tree.general.tags": [
+    "TODO",
+    "FIXME",
+    "BUG",
+    "HACK",
+    "NOTE",
+    "REVIEW"
+  ],
+  "todo-tree.general.tagGroups": {
+    "TODO": [
+      "TODO",
+      "REVIEW"
+    ],
+    "FIXME": [
+      "FIXME",
+      "BUG",
+      "HACK"
+    ],
+    "NOTE": [
+      "NOTE"
+    ]
+  },
+  "todo-tree.highlights.enabled": true,
+  "todo-tree.highlights.useColourScheme": true,
+  "todo-tree.tree.showCountsInTree": true,
+  "todo-tree.filtering.excludeGlobs": [
+    "**/.dart_tool/**",
+    "**/.pub-cache/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/ios/Pods/**",
+    "**/macos/Pods/**"
+  ],
+  "cSpell.language": "en,zh-CN",
+  "cSpell.words": [
+    "appbar",
+    "APPICON",
+    "ASSETCATALOG",
+    "BITCODE",
+    "cfbundle",
+    "Cupertino",
+    "desaturate",
+    "Entrys",
+    "grayscale",
+    "hexcode",
+    "INFOPLIST",
+    "interactor",
+    "interactors",
+    "lisense",
+    "lldb",
+    "loggable",
+    "lproj",
+    "LTRB",
+    "LTWH",
+    "MaterialApp",
+    "OBJC",
+    "oktoast",
+    "Onone",
+    "pinduoduo",
+    "pubspec",
+    "repassword",
+    "riverpod",
+    "Roboto",
+    "RUNPATH",
+    "Schyler",
+    "ScreenUtil",
+    "taobao",
+    "tmall",
+    "VKUPTBL",
+    "xcassets",
+    "xcconfig",
+    "xctest"
+  ],
+  "material-icon-theme.activeIconPack": "react_redux",
+  "material-icon-theme.folders.associations": {
+    "android": "android",
+    "ios": "ios",
+    "lib": "src",
+    "test": "test",
+    "web": "web"
+  },
+  "path-intellisense.mappings": {
+    "@": "${workspaceFolder}/lib"
+  },
+  "yaml.validate": true,
+  "yaml.format.enable": true,
+  "prettier.requireConfig": false,
+  "prettier.printWidth": 100,
+  "prettier.singleQuote": false,
+  "dart.lineLength": 100,
+  "dart.closingLabels": true,
+  "dart.debugSdkLibraries": false,
+  "dart.debugExternalPackageLibraries": false,
+  "dart.showTodos": true,
+  "dart.flutterWidgetPreview.enabled": true,
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true,
+  "dart.openDevTools": "flutter",
+  "dart.flutterHotReloadOnSave": "manual",
+  "dart.flutterCreateOrganization": "com.example",
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.selectionHighlight": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
