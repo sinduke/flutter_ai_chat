@@ -1,0 +1,13 @@
+flutter_native_splash:
+  color: "#F59E0B"
+  image: assets/splash/ai_chat_splash_lockup.png
+  android: true
+  ios: true
+  web: false
+
+  android_gravity: center
+  ios_content_mode: center
+
+  android_12:
+    color: "#F59E0B"
+    image: assets/splash/ai_chat_splash_lockup.png

@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Logs and temp files
+*.log
+tmp/
+temp/
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated archives
+*.zip
+*.tar
+*.tar.gz
