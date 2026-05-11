@@ -55,6 +55,10 @@ AIChats source commit/range
 The goal is not a mechanical file translation. The goal is to recreate product
 features and architecture evolution in a Flutter-native way.
 
+Architecture is not preselected as MVVM, VIPER, RIB, or any other final model.
+The project should start with the smallest runnable structure and evolve only
+when feature complexity creates a concrete reason.
+
 ## 4. First-Phase Route
 
 The first phase should establish:
@@ -64,9 +68,12 @@ Flutter app shell
 -> design system
 -> tab shell
 -> Welcome / Explore / Chats / Profile placeholders
--> mock-first AI chat domain
 -> source-history task mapping
+-> simple view-first feature implementation
+-> MV / MVVM / Manager / Service / DI / Router evolution when justified
+-> mock-first AI chat domain
 -> incremental feature rewrite from AIChats
+-> final architecture summary and lessons learned
 ```
 
 ## 5. First-Phase Task Line
@@ -90,6 +97,10 @@ Flutter app shell
 
 - Preserve the AIChats architecture evolution as task evidence.
 - Prefer Flutter-native structure over SwiftUI file-by-file translation.
+- Avoid locking the project into a final architecture before the history reaches
+  that stage.
+- Introduce MV, MVVM, Manager, Service, DI, Router, VIPER, or RIB-style
+  boundaries only when the task records the reason.
 - Keep mock services available before remote/provider work.
 - Keep UI, state, service, routing, and provider responsibilities separated.
 - Keep design system work reusable across onboarding, explore, chats, profile,

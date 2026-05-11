@@ -81,10 +81,15 @@ Foundation should eventually include:
 Foundation code must not contain provider credentials or product-specific AI
 provider SDK calls.
 
+Do not create every foundation area up front. Add each area when the current
+architecture stage and task evidence justify it.
+
 ## 5. Planned Feature Modules
 
-Each feature should follow
+Each feature should follow the evolution rules in
 `ai_dev/PRESETS/flutter-ai-chat/ARCHITECTURE.md`.
+
+These roots are planned capacity, not mandatory first-step folders.
 
 ```text
 lib/features/onboarding/

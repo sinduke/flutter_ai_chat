@@ -37,6 +37,8 @@ Notes:
 
 ## 4. Planned Source Roots
 
+Create roots only when the current architecture stage needs real files.
+
 ```text
 lib/app/
 lib/common/
@@ -59,6 +61,10 @@ integration_test/
 | `lib/features/<feature>/data/` | Data | Mock/remote services, DTO adapters, repositories. |
 | `test/` | Tests | Unit and widget tests. |
 | `integration_test/` | Integration tests | End-to-end app flows. |
+
+Early view-first tasks may use a flatter feature folder. Promote files into
+presentation/application/domain/data only when the task records the architecture
+evolution reason.
 
 ## 6. Current Source File Inventory
 

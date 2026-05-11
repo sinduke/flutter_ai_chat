@@ -27,6 +27,7 @@ Product Goal:
 Primary Actor:
 Owning Feature:
 Source Commit / Range:
+Architecture Stage:
 Routes:
 State / Controller:
 Services:
@@ -41,18 +42,18 @@ Status:
 
 ## 4. First-Phase Feature Map
 
-| Feature ID | Name | Actor | Owning Feature | Routes | State / Controller | Services | Data | Events | Task | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-001 | Flutter AI Chat foundation | user/system | app_shell, common | app root | app bootstrap | app dependencies | theme/design tokens | app_started | 001_flutter_ai_chat_foundation | planned |
-| F-002 | AIChats source-history map | developer | ai_dev | none | none | source history reader | commit map | source_step_mapped | 002_aichats_source_history_map | planned |
-| F-003 | App shell and static tabs | user | app_shell | root tabs | tab state | mock dependencies | tab config | tab_selected, screen_viewed | 003_app_shell_and_static_tabs | planned |
-| F-004 | Welcome/onboarding baseline | new user | onboarding | welcome/onboarding | onboarding controller | mock user/profile | onboarding state | onboarding_started, onboarding_completed | later source rewrite task | planned |
-| F-005 | Explore/avatar discovery baseline | user | explore, avatar | explore, category list | explore controller | mock avatar service | avatar summary/list | avatar_viewed, avatar_selected | later source rewrite task | planned |
-| F-006 | Chats list baseline | user | chats | chats tab | chats controller | mock chat service | chat session summary | chat_opened | later source rewrite task | planned |
-| F-007 | Chat conversation baseline | user | chat | chat detail | chat controller | mock AI/chat services | chat message, generation result | message_sent, ai_reply_generated | later source rewrite task | planned |
-| F-008 | Profile/settings baseline | user | profile, settings | profile/settings | profile/settings controllers | mock auth/user services | user profile | settings_action | later source rewrite task | planned |
-| F-009 | Observability baseline | developer/product | analytics | all screens | analytics facade | console/mock analytics | event payload | all safe product events | later source rewrite task | planned |
-| F-010 | Paywall/entitlement baseline | user | paywall | paywall | entitlement controller | mock purchase service | entitlement state | paywall_shown, entitlement_changed | later source rewrite task | planned |
+| Feature ID | Name | Actor | Owning Feature | Architecture Stage | Routes | State / Controller | Services | Data | Events | Task | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| F-001 | Flutter AI Chat foundation | user/system | app_shell, common | starter -> view-first | app root | app bootstrap | local dependencies | theme/design tokens | app_started | 001_flutter_ai_chat_foundation | planned |
+| F-002 | AIChats source-history map | developer | ai_dev | documentation/control plane | none | none | source history reader | commit map | source_step_mapped | 002_aichats_source_history_map | planned |
+| F-003 | App shell and static tabs | user | app_shell | view-first, possibly MV for tab config | root tabs | local tab state | mock dependencies only if needed | tab config | tab_selected, screen_viewed | 003_app_shell_and_static_tabs | planned |
+| F-004 | Welcome/onboarding baseline | new user | onboarding | view-first -> MV/MVVM when actions grow | welcome/onboarding | local state or controller | mock user/profile when needed | onboarding state | onboarding_started, onboarding_completed | later source rewrite task | planned |
+| F-005 | Explore/avatar discovery baseline | user | explore, avatar | view-first -> Service when mock data repeats | explore, category list | local state or controller | mock avatar service when justified | avatar summary/list | avatar_viewed, avatar_selected | later source rewrite task | planned |
+| F-006 | Chats list baseline | user | chats | view-first -> Service when sessions are shared | chats tab | local state or controller | mock chat service when justified | chat session summary | chat_opened | later source rewrite task | planned |
+| F-007 | Chat conversation baseline | user | chat | MVVM/controller -> Service when generation appears | chat detail | chat controller | mock AI/chat services | chat message, generation result | message_sent, ai_reply_generated | later source rewrite task | planned |
+| F-008 | Profile/settings baseline | user | profile, settings | view-first -> Manager when shared account actions grow | profile/settings | local state or controller | mock auth/user services when needed | user profile | settings_action | later source rewrite task | planned |
+| F-009 | Observability baseline | developer/product | analytics | Service boundary when events repeat | all screens | none or analytics helper | console/mock analytics | event payload | all safe product events | later source rewrite task | planned |
+| F-010 | Paywall/entitlement baseline | user | paywall | Manager/Service when purchase state appears | paywall | entitlement controller | mock purchase service | entitlement state | paywall_shown, entitlement_changed | later source rewrite task | planned |
 
 ## 5. Update Rules
 

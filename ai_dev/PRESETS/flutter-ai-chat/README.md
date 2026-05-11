@@ -11,7 +11,8 @@ It is intended for projects that need:
 - AI chat sessions and message UI.
 - Local mock-first development.
 - Future remote AI provider integration.
-- Clear feature, state, service, routing, and test boundaries.
+- Architecture that evolves from simple feature code toward stronger boundaries
+  only when product complexity justifies it.
 - Optional source-history rewrite from an existing iOS/SwiftUI app.
 
 Project-specific product names, source repositories, route names, API keys,
@@ -46,11 +47,11 @@ non-chat mobile apps unless the task explicitly adapts it.
 
 This preset owns reusable Flutter AI chat guidance:
 
-- Feature-oriented Flutter source layout.
-- UI/state/data layering.
+- Architecture evolution stages and entry triggers.
+- UI, state, service, routing, and dependency boundaries when they become
+  necessary.
 - Chat and AI provider contracts.
 - Mock-first service boundaries.
-- Routing and dependency injection rules.
 - Flutter verification gates.
 - Source-history rewrite discipline.
 
@@ -58,9 +59,10 @@ The project overlay owns current-project details:
 
 - Source app and branch/commit mapping.
 - Current Flutter package name.
+- Current architecture stage.
+- Architecture evolution decisions.
 - Selected state management package.
 - Active feature roadmap.
 - Actual file map and task order.
 - API/provider keys and environment policy.
 - Visual design decisions.
-

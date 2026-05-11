@@ -35,8 +35,8 @@ Status:
 
 | Function ID | Feature | Layer | Name | Draft Signature | Contract | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| FN-APP-001 | app_shell | app | `buildAppDependencies` | `AppDependencies buildAppDependencies(AppEnvironment env)` | AppDependencies | planned |
-| FN-ROUTE-001 | app_shell | routing | `createAppRouter` | `AppRouter createAppRouter(AppDependencies dependencies)` | AppRouteConfig | planned |
+| FN-APP-001 | app_shell | app | `buildAppDependencies` | `AppDependencies buildAppDependencies(AppEnvironment env)` | AppDependencies | planned when DI stage is justified |
+| FN-ROUTE-001 | app_shell | routing | `createAppRouter` | `AppRouter createAppRouter(AppDependencies dependencies)` | AppRouteConfig | planned when Router stage is justified |
 | FN-CHAT-001 | chat | application | `loadChatSession` | `Future<ChatSession> loadChatSession(ChatSessionId id)` | ChatSession | planned |
 | FN-CHAT-002 | chat | application | `sendMessage` | `Future<ChatMessage> sendMessage(SendMessageInput input)` | SendMessageInput, ChatMessage | planned |
 | FN-AI-001 | chat | data/service | `generateReply` | `Future<ChatGenerationResult> generateReply(ChatGenerationRequest request)` | ChatGenerationRequest, ChatGenerationResult | planned |
@@ -50,5 +50,7 @@ Status:
 - Feature widgets must not call concrete remote provider SDKs directly.
 - Mock service implementations must be available before remote service work is
   considered complete.
+- Do not implement planned function contracts before the architecture stage needs
+  them.
 - When a function becomes implemented, add exact file paths to
   `FILE_MAP.md` and `IMPLEMENTATION_MAP.md`.

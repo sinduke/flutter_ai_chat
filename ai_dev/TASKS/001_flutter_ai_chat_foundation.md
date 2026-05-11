@@ -10,6 +10,25 @@ Create the first approved Flutter AI Chat foundation task from the active
 This task should replace the starter counter app with a real Flutter app shell
 only after the user approves Build mode.
 
+Current architecture stage:
+
+```text
+starter
+```
+
+Expected architecture stage after this task:
+
+```text
+view-first app shell with shared design tokens
+```
+
+Architecture evolution reason:
+
+```text
+The project needs a runnable app surface before introducing MV, MVVM, Manager,
+Service, DI, Router, VIPER, or RIB-style boundaries.
+```
+
 ## Non-Goals
 
 - Do not rebuild the full current AIChats `main` branch in one task.
@@ -17,16 +36,19 @@ only after the user approves Build mode.
 - Do not add provider credentials or API keys.
 - Do not implement purchases, push, deep links, or remote analytics yet.
 - Do not rewrite unrelated platform assets or existing user changes.
+- Do not introduce MVVM, Manager, Service, DI, Router, VIPER, or RIB-style
+  boundaries unless the approved Build task records a specific trigger.
 
 ## Implementation Steps
 
 | Step | Status | Description | Expected Evidence |
 | --- | --- | --- | --- |
 | S1 | pending | Confirm source-history starting point from the AIChats repository. | Source branch and commit/range recorded. |
-| S2 | pending | Replace counter demo with a Flutter app shell using existing design tokens. | `lib/main.dart` or app shell files updated. |
-| S3 | pending | Add placeholder routes/tabs for Welcome, Explore, Chats, and Profile when approved. | App renders the intended first shell. |
-| S4 | pending | Add focused smoke/widget tests if source files change. | `flutter test` passes. |
-| S5 | pending | Update project indexes for every source file and contract change. | Project maps reference changed files and features. |
+| S2 | pending | Confirm architecture stage and why no heavier architecture is needed yet. | Task notes record current stage and next trigger. |
+| S3 | pending | Replace counter demo with a Flutter app shell using existing design tokens. | `lib/main.dart` or app shell files updated. |
+| S4 | pending | Add placeholder routes/tabs for Welcome, Explore, Chats, and Profile when approved. | App renders the intended first shell. |
+| S5 | pending | Add focused smoke/widget tests if source files change. | `flutter test` passes. |
+| S6 | pending | Update project indexes for every source file and contract change. | Project maps reference changed files and features. |
 
 ## Index Updates
 
@@ -56,4 +78,3 @@ flutter analyze
 flutter test
 git diff --check
 ```
-

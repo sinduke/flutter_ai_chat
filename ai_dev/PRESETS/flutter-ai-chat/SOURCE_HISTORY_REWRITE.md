@@ -19,6 +19,8 @@ Each rewrite task should identify:
 - Source commit or commit range.
 - Product behavior introduced by that commit.
 - Architecture change introduced by that commit.
+- Current Flutter architecture stage before the task.
+- Flutter architecture stage after the task.
 - Flutter equivalent scope.
 - Verification gates.
 
@@ -32,19 +34,36 @@ When the source project evolves through stages, preserve the learning path.
 Example stages:
 
 ```text
-template
--> app shell and static UI
--> feature UI
--> service protocols and mock data
--> remote services
--> logging and observability
--> routing abstraction
--> state management / MVVM
--> interactor or VIPER-style boundaries
+template / starter
+-> basic runnable app
+-> view-first feature UI
+-> MV extraction
+-> MVVM or controller extraction
+-> Manager for feature coordination
+-> Service protocols and mock data
+-> Remote services
+-> DI composition
+-> Router abstraction
+-> Interactor / use-case boundary
+-> VIPER/RIB-style module boundary
+-> logging, observability, experiments, purchases, and platform integrations as needed
 ```
 
 Do not implement the final architecture during the early tasks unless the task
 explicitly says the rewrite is allowed to skip history.
+
+## 3.1 Evolution Rule
+
+The rewrite should preserve why the architecture changed.
+
+Each task that adds a layer must document:
+
+- The concrete complexity or duplication that triggered the change.
+- Why the previous stage is no longer enough.
+- Why the next stage is the smallest useful step.
+- What new cost the added layer introduces.
+
+If there is no clear trigger, keep the simpler stage.
 
 ## 4. Task File Requirements
 
@@ -56,8 +75,11 @@ Source Branch:
 Source Commit / Range:
 Source Product Goal:
 Source Architecture Change:
+Current Flutter Architecture Stage:
 Flutter Product Goal:
 Flutter Architecture Change:
+Next Flutter Architecture Stage:
+Architecture Evolution Reason:
 Affected Flutter Files:
 Verification:
 Index Updates:
@@ -90,4 +112,3 @@ Do not mark a rewrite step complete unless:
 - Tests pass or skipped tests are justified.
 - The task records the source commit evidence.
 - Project indexes reflect new files and feature contracts.
-

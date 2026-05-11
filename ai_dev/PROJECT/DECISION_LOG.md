@@ -123,3 +123,41 @@ Alternatives Considered:
 References:
 
 - `ai_dev/PRESETS/flutter-ai-chat/STATE_MANAGEMENT.md`
+
+### D-0004 Treat architecture as an evolution record, not a fixed target model
+
+Date: 2026-05-11
+Status: accepted
+
+Context:
+
+The project has three goals: build the Flutter app, replay and learn from
+architecture evolution, then summarize the final architecture and lessons. A
+fixed target architecture would erase that learning path.
+
+Decision:
+
+Do not start by mandating MVVM, Manager, Service, DI, Router, VIPER, RIB, or any
+other final architecture. Each task should start from the current simplest
+runnable stage and introduce the next boundary only when the task records a
+concrete reason.
+
+Consequences:
+
+- Task files must record current architecture stage and evolution reason when
+  adding a layer.
+- Early implementation may be intentionally simple.
+- Review should reject both premature abstraction and hidden complexity inside
+  widgets.
+- Final project summary should explain how architecture evolved and why each
+  stage was introduced.
+
+Alternatives Considered:
+
+- Define a final feature-first MVVM/DI/Router target immediately. Rejected
+  because it conflicts with the source-history learning goal.
+
+References:
+
+- `ai_dev/PRESETS/flutter-ai-chat/ARCHITECTURE.md`
+- `ai_dev/PRESETS/flutter-ai-chat/SOURCE_HISTORY_REWRITE.md`

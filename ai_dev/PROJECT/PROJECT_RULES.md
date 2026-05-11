@@ -42,7 +42,48 @@ When a task follows the source AIChats history, it must record:
 
 Translate architecture intent, not SwiftUI files mechanically.
 
-## 4. Project-Specific Priorities
+## 4. Architecture Evolution Rule
+
+This project must not lock into a final architecture model at the start.
+
+Every Build task that changes Flutter source should record:
+
+- Current architecture stage.
+- Whether the current stage is still enough.
+- If a new layer is introduced, the specific pain that requires it.
+- The smallest next architecture step.
+- The cost or tradeoff introduced by that step.
+
+Valid stage examples include:
+
+```text
+starter
+view-first
+MV
+MVVM/controller
+Manager
+Service
+Repository/data boundary
+DI
+Router
+Interactor
+VIPER/RIB-style module boundary
+```
+
+The expected flow is:
+
+```text
+write product code
+-> observe repeated complexity
+-> evolve architecture one step
+-> record the reason
+-> summarize what was learned
+```
+
+Do not add Manager, Service, DI, Router, VIPER, or RIB-style boundaries before a
+task has evidence that the simpler stage is no longer enough.
+
+## 5. Project-Specific Priorities
 
 - Preserve the ordinary feature-development path and architecture evolution.
 - Keep the Flutter implementation runnable after each Build task.
@@ -54,7 +95,7 @@ Translate architecture intent, not SwiftUI files mechanically.
 - Keep design tokens and reusable UI primitives under shared design/common
   layers before repeated feature UI grows.
 
-## 5. Project Task Rule
+## 6. Project Task Rule
 
 Build work must use an approved task file under `ai_dev/TASKS/`.
 
@@ -89,7 +130,7 @@ test, config, or source-history contracts, update the matching project index:
 - `ai_dev/PROJECT/CONFIG_ENV_INDEX.md`
 - `ai_dev/PROJECT/TRACEABILITY_MATRIX.md`
 
-## 6. Project Open Questions
+## 7. Project Open Questions
 
 Current open questions are tracked in:
 

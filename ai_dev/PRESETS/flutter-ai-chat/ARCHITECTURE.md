@@ -1,199 +1,200 @@
-# Flutter AI Chat Architecture Rules
+# Flutter AI Chat Architecture Evolution Rules
 
 ## 1. Purpose
 
-This document defines the reusable architecture baseline for Flutter AI chat
-apps.
+This document defines how architecture should evolve in a Flutter AI chat app.
 
-The goal is practical production structure: feature code should be easy to
-change, mock, test, and later connect to real services without forcing a large
-rewrite.
+The project goal is not to apply one fixed architecture from day one. The goal
+is to build the product first, let real complexity appear, then introduce the
+smallest architecture step that solves the current problem.
 
-## 2. Architecture Style
+Architecture is treated as an output of product development, not a template to
+force onto every screen.
 
-Default style:
+## 2. Core Principle
 
-- Feature-first source layout.
-- Presentation, application, domain, and data boundaries where useful.
-- Mock-first service protocols.
-- Explicit dependency injection.
-- Router-owned navigation.
-- Design system before repeated UI.
+Every implementation task must be able to answer:
 
-Do not introduce heavyweight architecture before the task needs it. Early
-screens may be simple, but they must leave room for later ViewModel,
-Interactor, Repository, or Router evolution.
+```text
+What is the current architecture stage?
+Why is this stage enough right now?
+What pain or complexity would justify the next stage?
+Did this task introduce that pain?
+If yes, what is the smallest architecture evolution?
+```
 
-## 3. Source Layout
+Do not introduce MVVM, Manager, Service, DI, Router, VIPER, RIB, or another
+pattern only because it may be needed later.
 
-Default Flutter source layout:
+## 3. Architecture Stage Ladder
+
+The project may move through these stages. A task can stay at the current stage
+or move one step when the reason is documented.
+
+```text
+Stage 0: Flutter starter / single app entry
+Stage 1: View-first feature code
+Stage 2: MV / extracted model and rendering helpers
+Stage 3: MVVM / screen state and user intent move into ViewModel or controller
+Stage 4: Manager / feature coordination moves out of ViewModel
+Stage 5: Service boundary / mock and remote implementations split
+Stage 6: Repository or data boundary / persistence and DTO mapping stabilize
+Stage 7: DI composition / dependencies are assembled explicitly
+Stage 8: Router / route construction and navigation policy separate from pages
+Stage 9: Interactor / use-case boundary for cross-feature workflows
+Stage 10: VIPER/RIB-style module boundary when feature scale requires it
+```
+
+This ladder is descriptive, not mandatory. Some projects may skip a stage, stay
+simple for a long time, or choose a different name for the same boundary. The
+task must explain the reason.
+
+## 4. Stage Entry Triggers
+
+Use these triggers before adding architecture:
+
+| Stage | Add When | Do Not Add When |
+| --- | --- | --- |
+| View-first | A screen can be implemented directly and remains readable. | The screen already has remote calls, branching state, or repeated business logic. |
+| MV | Data shape is repeated or rendering needs stable models. | The data is one-off display text. |
+| MVVM/controller | User actions, loading/error/data state, or tests need separation from widgets. | The page is static or trivially local. |
+| Manager | Multiple ViewModels need the same coordination or lifecycle ownership. | Only one screen needs one method. |
+| Service | Behavior may become mock/remote or external-provider backed. | The logic is pure local formatting. |
+| Repository/data boundary | Persistence, caching, DTO mapping, or source switching becomes real. | There is no stored or remote data. |
+| DI | Dependencies become shared, environment-specific, or hard to test manually. | Constructor injection with local objects is still clear. |
+| Router | Navigation spans features or route construction becomes duplicated. | A single local callback is clear. |
+| Interactor/use case | Workflow crosses features or needs non-UI tests. | The ViewModel only forwards a simple action. |
+| VIPER/RIB-style boundary | A feature becomes large enough to need explicit module ownership and navigation/business split. | The feature is still small and readable. |
+
+## 5. Source Layout Is Stage-Dependent
+
+Do not create the full target folder tree before code needs it.
+
+Early acceptable layout:
 
 ```text
 lib/
-  app/
-    app.dart
-    app_bootstrap.dart
-    app_router.dart
-    app_dependencies.dart
-  common/
-    design/
-    widgets/
-    routing/
-    utils/
-  features/
-    <feature>/
-      presentation/
-        pages/
-        widgets/
-        controllers/
-      application/
-        use_cases/
-        services/
-      domain/
-        models/
-        repositories/
-        policies/
-      data/
-        models/
-        services/
-        repositories/
-        mock/
   main.dart
+  common/design/
 ```
 
-Small features may start with fewer folders. Add layers when they remove real
-coupling or support the current task's testability.
-
-## 4. Dependency Direction
-
-Allowed direction:
+View-first feature layout:
 
 ```text
-presentation -> application -> domain
-data -> domain protocols
-app composition -> presentation/application/data wiring
+lib/features/<feature>/
+  <feature>_page.dart
+  widgets/
 ```
 
-Forbidden direction:
+MVVM/controller stage:
 
 ```text
-domain -> Flutter widgets
-domain -> BuildContext
-domain -> package-specific HTTP/cache SDKs
-application -> concrete remote service when a protocol exists
-presentation -> raw provider SDKs
-widgets -> persistence or network clients directly
+lib/features/<feature>/
+  presentation/
+    pages/
+    widgets/
+    controllers/
+  domain/
+    models/
 ```
 
-UI widgets should render state and emit intent. They should not own API calls,
-storage details, or provider-specific AI behavior.
+Service/data stage:
 
-## 5. Feature Boundaries
+```text
+lib/features/<feature>/
+  application/
+  domain/
+  data/
+    mock/
+    remote/
+```
 
-Typical AI chat features:
+Router/DI/interactor stages may add:
 
-- `app_shell`
-- `onboarding`
-- `auth`
-- `profile`
-- `avatar`
-- `explore`
-- `chats`
-- `chat`
-- `settings`
-- `paywall`
-- `dev_settings`
-- `analytics`
-- `experiments`
-- `push`
-- `deep_linking`
+```text
+lib/app/
+  app_router.dart
+  app_dependencies.dart
+lib/features/<feature>/
+  routing/
+  application/use_cases/
+```
 
-Shared widgets belong in `common/widgets` only when they are genuinely reusable.
-Feature-specific components stay inside the owning feature.
+Only create folders that have real files and current ownership.
 
-## 6. App Shell
+## 6. Dependency Direction By Stage
 
-The app shell owns:
+Early view-first code may be direct, but it must stay easy to move.
 
-- MaterialApp or CupertinoApp configuration.
-- Theme and localization configuration.
-- Router configuration.
-- Global providers/dependencies.
-- Top-level lifecycle observers.
+As soon as service or data boundaries exist, follow this direction:
 
-Feature pages must not reconfigure global app dependencies.
+```text
+widget/page -> controller/view model -> manager/use case -> service protocol
+mock/remote service -> protocol/model contracts
+app composition -> concrete dependency wiring
+```
 
-## 7. Routing
+Avoid these once boundaries exist:
 
-Routing rules:
+```text
+widget -> concrete remote SDK
+domain model -> Flutter BuildContext
+service protocol -> concrete mock/remote implementation
+remote provider -> UI state object
+```
 
-- Centralize route names and typed route data where practical.
-- Keep route construction separate from feature widgets.
-- Navigation callbacks may be simple early on, but should converge toward a
-  router/delegate layer when navigation becomes cross-feature.
-- Do not pass unrelated service objects through route arguments.
+The rule is not "always create every layer". The rule is "when a layer exists,
+keep the direction clean".
 
-For source-history rewrites, preserve the product navigation behavior first,
-then evolve the Flutter routing abstraction when the source app history reaches
-that architecture stage.
+## 7. Design System Evolution
 
-## 8. Dependency Injection
+Design system work can start early because repeated UI cost appears quickly.
 
-Dependencies should be assembled in one app-level composition area.
-
-Prefer:
-
-- Protocol/interface first for services that will have mock and remote versions.
-- Mock services for early UI and tests.
-- Explicit constructor injection for view models/controllers/use cases.
-- Provider container or dependency scope only at stable composition boundaries.
-
-Avoid:
-
-- Global mutable singletons for business services.
-- Direct SDK construction inside pages/widgets.
-- Passing a large container into every feature object when a narrower
-  dependency is enough.
-
-## 9. Design System
-
-Create or reuse a design system before repeating UI primitives.
-
-Minimum expected foundations:
+Start with:
 
 - Colors.
 - Typography.
 - Spacing.
 - Radii.
 - Theme.
-- Buttons.
-- Text fields.
-- Avatars/images.
-- Loading and empty states.
 
-Design tokens should be framework-native Dart constants or theme extensions.
-Feature UI should use them instead of scattering ad hoc values.
+Add buttons, inputs, avatars, loading states, and empty states when repeated UI
+appears. Do not create a large component library before features need it.
 
-## 10. Environment Modes
+## 8. Routing Evolution
 
-AI chat apps usually need at least:
+Start with direct navigation or callbacks when simple.
 
-- `mock`: local deterministic data, no external network requirement.
-- `dev`: local or development backend/provider settings.
-- `prod`: production-safe defaults.
+Evolve routing when:
 
-Environment selection must not leak secrets into source code. Runtime keys,
-provider credentials, and sensitive endpoints belong in secure environment
-configuration.
+- Multiple features navigate to the same destination.
+- A route needs stable parameters.
+- Deep links or push notifications target routes.
+- Tests need route construction independent from widgets.
+- Source-history architecture reaches a router/builder stage.
 
-## 11. Platform Policy
+Do not add a router package only because it is common in Flutter apps.
 
-Flutter code should remain platform-neutral unless the feature requires native
-behavior.
+## 9. Dependency Injection Evolution
 
-When native integration is needed:
+Start with direct construction when the app is small.
 
-- Keep platform channel code isolated.
-- Document platform-specific behavior in project indexes.
-- Add fallback behavior for unsupported platforms when practical.
+Move to explicit composition when:
 
+- Mock/dev/prod dependencies differ.
+- Tests need to swap services.
+- Multiple features share services.
+- Environment configuration affects dependency creation.
+- Concrete SDK setup should be isolated from UI.
+
+Record any DI package choice in `PROJECT/DECISION_LOG.md` before relying on it.
+
+## 10. Review Rule
+
+Review should reject both extremes:
+
+- Under-architected code that hides real complexity inside widgets.
+- Over-architected code that adds layers before the product needs them.
+
+The acceptable solution is the smallest current architecture that keeps the next
+known evolution step possible.
