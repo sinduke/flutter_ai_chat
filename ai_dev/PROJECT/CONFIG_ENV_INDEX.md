@@ -39,7 +39,7 @@ data.
 
 | Key | Purpose | Type | Default | Sensitive | Owner | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| `app_page.show_tab_bar` | temporary AppPage shell preview visibility, similar to SwiftUI AppStorage for the current placeholder shell | bool | false | no | 001B_app_page_shell_persistence | implemented |
+| `app_page.show_tab_bar` | temporary AppPage shell preview visibility, similar to SwiftUI AppStorage for the current placeholder shell; reset to false by the placeholder Settings logout flow | bool | false | no | 001B_app_page_shell_persistence, 001E_profile_settings_logout | implemented |
 
 ## 6. Secret Policy
 

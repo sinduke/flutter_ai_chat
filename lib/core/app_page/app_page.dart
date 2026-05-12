@@ -5,6 +5,7 @@ import 'package:flutter_ai_chat/common/design/app_colors.dart';
 import 'package:flutter_ai_chat/common/preview/app_preview.dart';
 import 'package:flutter_ai_chat/core/app_page/app_page_shell_storage.dart';
 import 'package:flutter_ai_chat/core/tabbar_page/tabbar_page.dart';
+import 'package:flutter_ai_chat/core/welcome_page/welcome_page.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key, AppPageShellStorage? shellStorage})
@@ -21,7 +22,7 @@ class _AppPageState extends State<AppPage> {
       widget._shellStorage ?? SharedPreferencesAppPageShellStorage();
 
   bool _showTabBar = false;
-  bool _hasUserToggledBeforeRestore = false;
+  bool _hasShellChangedBeforeRestore = false;
 
   @override
   void initState() {
@@ -31,7 +32,9 @@ class _AppPageState extends State<AppPage> {
 
   Future<void> _restoreAppShell() async {
     final showTabBar = await _shellStorage.loadShowTabBar();
-    if (!mounted || _hasUserToggledBeforeRestore || showTabBar == _showTabBar) {
+    if (!mounted ||
+        _hasShellChangedBeforeRestore ||
+        showTabBar == _showTabBar) {
       return;
     }
 
@@ -40,9 +43,8 @@ class _AppPageState extends State<AppPage> {
     });
   }
 
-  void _toggleAppShell() {
-    final showTabBar = !_showTabBar;
-    _hasUserToggledBeforeRestore = true;
+  void _setShowTabBar(bool showTabBar) {
+    _hasShellChangedBeforeRestore = true;
 
     setState(() {
       _showTabBar = showTabBar;
@@ -53,13 +55,17 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: _toggleAppShell,
-        child: AppPageBuilder(
-          showTabBar: _showTabBar,
-          tabBarView: const TabbarPage(),
-          onboardingView: const _OnboardingPlaceholder(),
+      child: AppPageBuilder(
+        showTabBar: _showTabBar,
+        tabBarView: TabbarPage(
+          onLogout: () {
+            _setShowTabBar(false);
+          },
+        ),
+        onboardingView: WelcomePage(
+          onOnboardingCompleted: () {
+            _setShowTabBar(true);
+          },
         ),
       ),
     );
@@ -155,18 +161,6 @@ class _TabBarPlaceholder extends StatelessWidget {
   }
 }
 
-class _OnboardingPlaceholder extends StatelessWidget {
-  const _OnboardingPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const _FullScreenPanel(
-      backgroundColor: AppColors.primary,
-      label: 'Onboarding',
-    );
-  }
-}
-
 class _FullScreenPanel extends StatelessWidget {
   const _FullScreenPanel({required this.backgroundColor, required this.label});
 
@@ -203,7 +197,7 @@ Widget appPageBuilderOnboardingPreview() {
   return const AppPageBuilder(
     showTabBar: false,
     tabBarView: TabbarPage(),
-    onboardingView: _OnboardingPlaceholder(),
+    onboardingView: WelcomePage(),
   );
 }
 
@@ -212,12 +206,9 @@ Widget appPageBuilderTabbarPreview() {
   return const AppPageBuilder(
     showTabBar: true,
     tabBarView: TabbarPage(),
-    onboardingView: _OnboardingPlaceholder(),
+    onboardingView: WelcomePage(),
   );
 }
-
-@AppPagePreview(group: 'AppPage', name: 'Onboarding')
-Widget onboardingPlaceholderPreview() => const _OnboardingPlaceholder();
 
 @AppPagePreview(group: 'AppPage', name: 'Tabbar')
 Widget tabBarPlaceholderPreview() => const _TabBarPlaceholder();

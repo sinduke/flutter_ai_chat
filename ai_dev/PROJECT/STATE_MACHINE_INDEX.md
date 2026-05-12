@@ -32,9 +32,9 @@ failed
 
 ## 4. AppPage Shell Preview State
 
-This is a temporary local widget state for the first view-first shell. It is now
-restored from `app_page.show_tab_bar`, but it is not the final auth/session or
-onboarding completion state machine.
+This is a temporary shell state restored from `app_page.show_tab_bar`. The user
+can no longer toggle it by tapping the whole AppPage; onboarding pages own the
+transition into the tabbar shell.
 
 ```text
 onboarding_preview
@@ -44,20 +44,34 @@ tabbar_preview
 | From | To | Trigger | Guard | Side Effects | Status |
 | --- | --- | --- | --- | --- | --- |
 | `onboarding_preview` | `tabbar_preview` | AppPage restores persisted true value | `app_page.show_tab_bar == true` | show/animate tabbar preview | implemented |
-| `onboarding_preview` | `tabbar_preview` | user taps AppPage | none | animate onboarding out left while tabbar enters from right; persist `app_page.show_tab_bar=true` | implemented |
-| `tabbar_preview` | `onboarding_preview` | user taps AppPage | none | animate tabbar out right while onboarding enters from left; persist `app_page.show_tab_bar=false` | implemented |
+| `onboarding_preview` | `tabbar_preview` | user exits OnboardCompletedPage | none | animate onboarding out left while tabbar enters from right; persist `app_page.show_tab_bar=true` | implemented |
+| `tabbar_preview` | `onboarding_preview` | settings logout completes | none | animate tabbar out right while onboarding enters from left; persist `app_page.show_tab_bar=false` | implemented |
 
-## 5. Chat Generation State
+## 5. Welcome Onboarding Flow
 
-## 5. TabbarPage Static Tab State
+```text
+welcome
+onboarding_completed
+tabbar_preview
+```
 
-This is the current local placeholder tab state managed by `CupertinoTabScaffold`.
-It is not the final router or analytics state.
+| From | To | Trigger | Guard | Side Effects | Status |
+| --- | --- | --- | --- | --- | --- |
+| `welcome` | `onboarding_completed` | user taps Get Started | none | push OnboardCompletedPage | implemented |
+| `onboarding_completed` | `tabbar_preview` | user taps Completed | none | pop completion route; notify AppPage to persist and show tabbar shell | implemented |
+
+## 6. TabbarPage Static Tab And Depth State
+
+This is the current local placeholder tab state managed by a custom Cupertino
+tab shell. Each tab keeps its own `CupertinoTabView` navigator, and the shell
+hides the tabbar when the active tab route depth is greater than one.
 
 ```text
 explore
 chats
 profile
+tabbar_visible
+tabbar_hidden
 ```
 
 | From | To | Trigger | Guard | Side Effects | Status |
@@ -65,8 +79,25 @@ profile
 | `explore` | `chats` | user taps Chats tab | none | show Chats placeholder content | implemented |
 | `explore`/`chats` | `profile` | user taps Profile tab | none | show Profile placeholder content | implemented |
 | `chats`/`profile` | `explore` | user taps Explore tab | none | show Explore placeholder content | implemented |
+| `tabbar_visible` | `tabbar_hidden` | active tab pushes a non-root route | route depth `> 1` | slide/fade tabbar out and remove bottom content padding | implemented |
+| `tabbar_hidden` | `tabbar_visible` | active tab returns to root route | route depth `<= 1` | slide/fade tabbar in and restore bottom content padding | implemented |
 
-## 6. Chat Generation State
+## 7. Profile Settings Logout Flow
+
+```text
+profile
+settings
+logging_out
+onboarding_preview
+```
+
+| From | To | Trigger | Guard | Side Effects | Status |
+| --- | --- | --- | --- | --- | --- |
+| `profile` | `settings` | user taps Profile nav Settings item | none | push SettingsPage in the profile tab navigator | implemented |
+| `settings` | `logging_out` | user taps Logout | not already logging out | disable Logout button and wait 1 second | implemented |
+| `logging_out` | `onboarding_preview` | logout delay completes | SettingsPage still mounted | notify AppPage; persist `app_page.show_tab_bar=false` | implemented |
+
+## 8. Chat Generation State
 
 ```text
 idle
@@ -88,7 +119,7 @@ cancelled
 | `sending_user_message`/`waiting_for_ai`/`streaming_ai_reply` | `failed` | service error | retryable/non-retryable mapped | show safe error | planned |
 | `waiting_for_ai`/`streaming_ai_reply` | `cancelled` | user cancels | cancellable operation | stop provider request | planned |
 
-## 7. Entitlement State
+## 9. Entitlement State
 
 ```text
 unknown
