@@ -38,10 +38,10 @@ Notes:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | ROUTE-APP-001 | ui_route | `/` | none | none | AppPage root shell | AppPage | F-001 | implemented |
 | ROUTE-TAB-001 | ui_route | `/welcome` | none | none | WelcomePage | onboarding | F-004 | planned |
-| ROUTE-TAB-002 | ui_route | `/explore` | none | none | ExplorePage | explore | F-005 | planned |
-| ROUTE-TAB-003 | ui_route | `/chats` | none | none | ChatsPage | chats | F-006 | planned |
+| ROUTE-TAB-002 | ui_route | `/explore` | none | none | TabbarPage Explore placeholder | app_shell | F-003 | implemented |
+| ROUTE-TAB-003 | ui_route | `/chats` | none | none | TabbarPage Chats placeholder | app_shell | F-003 | implemented |
 | ROUTE-CHAT-001 | ui_route | `/chat/:id` | optional entitlement later | chatId | ChatPage | chat | F-007 | planned |
-| ROUTE-TAB-004 | ui_route | `/profile` | optional auth later | none | ProfilePage | profile | F-008 | planned |
+| ROUTE-TAB-004 | ui_route | `/profile` | optional auth later | none | TabbarPage Profile placeholder | app_shell | F-003 | implemented |
 | ROUTE-SETTINGS-001 | ui_route | `/settings` | optional auth later | none | SettingsPage | settings | F-008 | planned |
 | ROUTE-PAYWALL-001 | ui_route | `/paywall` | none | trigger context | PaywallPage | paywall | F-010 | planned |
 

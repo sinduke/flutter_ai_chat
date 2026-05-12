@@ -53,9 +53,9 @@ The exact platform target should match the files changed.
 
 | Feature ID | Required Tests | Required Commands/Gates | Required Index Evidence | Status |
 | --- | --- | --- | --- | --- |
-| F-001 | app boots, AppPage placeholder toggle smoke test, widget preview annotations analyze cleanly | `flutter analyze`, `flutter test` | file/implementation/test indexes | passing |
+| F-001 | app boots, AppPage placeholder toggle smoke test, persisted shell restore test, widget preview annotations analyze cleanly | `flutter analyze`, `flutter test` | file/implementation/test indexes | passing |
 | F-002 | source commit map reviewed against source repo | source `git log` evidence, `./bin/aidev check` | traceability, decision/risk updates | planned |
-| F-003 | app shell renders tabs, tab selection state | widget test, `flutter test` | route/state/file indexes | planned |
+| F-003 | app shell renders Explore/Chats/Profile tabs, tab selection state | widget test, `flutter test` | route/state/file indexes | passing |
 | F-004 | onboarding loading/data/action states | controller test, widget test | feature/route/state indexes | planned |
 | F-005 | explore empty/loading/data/error states | controller test, widget test | DTO/function/service indexes | planned |
 | F-006 | chats list empty/data/open states | controller test, widget test | DTO/function/service indexes | planned |
@@ -89,7 +89,31 @@ Command: flutter test
 Expected Evidence: "AppPage switches from onboarding to tabbar on tap" passes.
 Required Before: considering the counter demo replaced by the view-first root shell.
 Status: passing
-Notes: Covers the current placeholder shell only; real auth, tab routes, and tab content remain later tasks. The widget test checks the mid-transition ordering for the horizontal slide effect. `flutter analyze` also validates the current shared preview annotations compile.
+Notes: Covers the current placeholder shell only; real auth, tab routes, and tab content remain later tasks. The widget test checks the AppPageBuilder mid-transition ordering for the horizontal slide effect and verifies writes to the temporary shell storage. `flutter analyze` also validates the current shared preview annotations compile.
+```
+
+```text
+Test ID: TEST-APP-002
+Feature ID: F-001
+Risk Covered: AppPage restores the persisted tabbar shell state after the widget tree is rebuilt.
+Test File: test/widget_test.dart
+Command: flutter test
+Expected Evidence: "AppPage restores persisted tabbar state" passes.
+Required Before: treating the current AppPage shell preference as AppStorage-like local state.
+Status: passing
+Notes: Uses a fake AppPageShellStorage to validate the AppPage contract without depending on platform SharedPreferences in widget tests.
+```
+
+```text
+Test ID: TEST-APP-003
+Feature ID: F-003
+Risk Covered: TabbarPage exposes the three static tab items and switches between the placeholder Explore, Chats, and Profile pages.
+Test File: test/widget_test.dart
+Command: flutter test
+Expected Evidence: "TabbarPage renders three static items" passes.
+Required Before: treating the current tab shell as the implemented static tabbar baseline.
+Status: passing
+Notes: Covers the placeholder Explore, Chats, and Profile pages only. Real feature content, routes, analytics, and auth/profile behavior remain later tasks.
 ```
 
 ## 7. Critical Negative Tests

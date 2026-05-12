@@ -20,9 +20,9 @@ app while preserving architecture evolution.
 
 | Product / Rewrite Goal | Source Evidence | Architecture Stage | Flutter Feature | Routes | Functions / Services | Data Contracts | State / Permission | Observability | Tests | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Establish Flutter app foundation | Flutter project + AIChats template stage | starter -> view-first | F-001 | ROUTE-APP-001 | no public function/service yet | none yet | app boot state, AppPage shell preview state | none yet | TEST-APP-001 | implemented |
+| Establish Flutter app foundation | Flutter project + AIChats template stage | starter -> view-first | F-001 | ROUTE-APP-001 | FN-APP-002, FN-APP-003 | local preference key `app_page.show_tab_bar` | app boot state, persisted AppPage shell preview state | none yet | TEST-APP-001, TEST-APP-002 | implemented |
 | Map AIChats commit history into rewrite tasks | AIChats git log | documentation/control plane | F-002 | none | source-history workflow | source commit map task data | none | source_step_mapped | review evidence | planned |
-| Build static tab shell | AIChats app shell/tab stages | view-first, MV if tab config repeats | F-003 | ROUTE-TAB-001..004 | local tab state | tab config | tab state | tab_selected | widget test | planned |
+| Build static tab shell | AIChats app shell/tab stages | view-first | F-003 | ROUTE-TAB-002..004 | no public function/service yet | static tab config | local Cupertino tab state | none yet | TEST-APP-003 | implemented |
 | Build onboarding baseline | AIChats onboarding commits | view-first -> MV/MVVM when actions grow | F-004 | welcome/onboarding | onboarding controller only when needed | onboarding state | onboarding state | onboarding_started/completed | controller/widget tests | planned |
 | Build explore/avatar discovery | AIChats explore/avatar commits | view-first -> Service when mock/remote split appears | F-005 | explore/category | avatar service when justified | DTO-AVATAR-001 | none initially | avatar_viewed/selected | controller/widget tests | planned |
 | Build chats list | AIChats chats commits | view-first -> Service when sessions are shared | F-006 | chats | chat service when justified | DTO-CHAT-001 | none initially | chat_opened | controller/widget tests | planned |

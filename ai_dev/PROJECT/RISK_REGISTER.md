@@ -160,3 +160,36 @@ Before committing or starting platform/build work.
 References:
 
 - `git status --short`
+
+### R-0005 Temporary shell preference may conflict with final auth state
+
+Status: open
+Type: architecture
+Severity: medium
+Owner: app_shell
+
+Context:
+
+Task 001B persists `app_page.show_tab_bar` so the placeholder AppPage shell can
+restore its last visible state. This is intentionally not the final auth,
+session, or onboarding completion model.
+
+Impact:
+
+If future auth/onboarding work reads this temporary flag as a business source of
+truth, a signed-out or expired-session user could be routed to the wrong shell.
+
+Mitigation:
+
+Keep the key documented as temporary shell preview state. Replace or migrate it
+when real auth/session/onboarding state is implemented.
+
+Trigger To Revisit:
+
+Before implementing real onboarding completion, session restore, logout, or root
+route decisions.
+
+References:
+
+- `ai_dev/TASKS/001B_app_page_shell_persistence.md`
+- `ai_dev/PROJECT/DECISION_LOG.md`

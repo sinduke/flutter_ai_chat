@@ -161,3 +161,39 @@ References:
 
 - `ai_dev/PRESETS/flutter-ai-chat/ARCHITECTURE.md`
 - `ai_dev/PRESETS/flutter-ai-chat/SOURCE_HISTORY_REWRITE.md`
+
+### D-0005 Use shared_preferences for temporary AppPage shell preference
+
+Date: 2026-05-12
+Status: accepted
+
+Context:
+
+The current AppPage shell needs SwiftUI `AppStorage`-like persistence for its
+temporary onboarding/tabbar preview state. The project has not yet introduced
+final auth, session, onboarding completion, state management, routing, or DI.
+
+Decision:
+
+Use `shared_preferences` through a narrow `AppPageShellStorage` adapter and
+persist `app_page.show_tab_bar` as a temporary shell preference.
+
+Consequences:
+
+- AppPage can restore the last selected placeholder shell after app restart.
+- Widget tests can use a fake storage boundary without depending on platform
+  SharedPreferences.
+- This does not decide the final auth/session/onboarding source of truth and
+  must be revisited when those features are implemented.
+
+Alternatives Considered:
+
+- Add a global state-management or DI package. Rejected because the current
+  scope only needs one local preference.
+- Persist a final business key such as `hasCompletedOnboarding`. Rejected until
+  the real onboarding/auth model exists.
+
+References:
+
+- `ai_dev/TASKS/001B_app_page_shell_persistence.md`
+- `lib/core/app_page/app_page_shell_storage.dart`

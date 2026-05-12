@@ -36,6 +36,8 @@ Status:
 | Function ID | Feature | Layer | Name | Draft Signature | Contract | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | FN-APP-001 | app_shell | app | `buildAppDependencies` | `AppDependencies buildAppDependencies(AppEnvironment env)` | AppDependencies | planned when DI stage is justified |
+| FN-APP-002 | app_shell | app shell persistence | `AppPageShellStorage.loadShowTabBar` | `Future<bool> loadShowTabBar()` | Returns persisted temporary AppPage shell tabbar visibility, defaulting to false when unset. | implemented |
+| FN-APP-003 | app_shell | app shell persistence | `AppPageShellStorage.saveShowTabBar` | `Future<void> saveShowTabBar(bool showTabBar)` | Persists the temporary AppPage shell tabbar visibility under `app_page.show_tab_bar`. | implemented |
 | FN-ROUTE-001 | app_shell | routing | `createAppRouter` | `AppRouter createAppRouter(AppDependencies dependencies)` | AppRouteConfig | planned when Router stage is justified |
 | FN-CHAT-001 | chat | application | `loadChatSession` | `Future<ChatSession> loadChatSession(ChatSessionId id)` | ChatSession | planned |
 | FN-CHAT-002 | chat | application | `sendMessage` | `Future<ChatMessage> sendMessage(SendMessageInput input)` | SendMessageInput, ChatMessage | planned |

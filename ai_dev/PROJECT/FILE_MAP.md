@@ -11,11 +11,13 @@ update whenever files are created, moved, or deleted.
 
 ## 2. Current Status
 
-Status: Flutter view-first root page plus design-token foundation exists.
+Status: Flutter view-first root page plus design-token foundation and a narrow
+AppPage shell preference adapter exist.
 
 The app currently has a Flutter entrypoint, `AppPage` root shell placeholder,
-widget smoke coverage, and shared design files. Future tasks should replace the
-placeholder tabbar/onboarding surfaces through approved task files.
+temporary persisted shell preference, a static three-item tabbar page, widget
+smoke coverage, and shared design files. Future tasks should replace the
+placeholder onboarding and tab content surfaces through approved task files.
 
 ## 3. Source File Record Template
 
@@ -75,31 +77,115 @@ Path: lib/main.dart
 Feature: app_shell
 Layer: App entrypoint
 Kind: Flutter entrypoint
-Owner Task: 001A_app_page_switching_shell
+Owner Task: 001A_app_page_switching_shell, 001B_app_page_shell_persistence, 001C_tabbar_page_items
 Public Symbols: main, MyApp
-Depends On: flutter/cupertino.dart, common/design/app_colors.dart, core/app_page.dart
+Depends On: flutter/cupertino.dart, common/design/app_colors.dart, core/app_page/app_page.dart, core/app_page/app_page_shell_storage.dart
 Referenced By: Flutter runtime
 Related Routes: ROUTE-APP-001
 Related Function IDs: none yet
 Related DTO IDs: none
 Related Tests: test/widget_test.dart
 Status: implemented
-Notes: Boots the Cupertino-themed app and renders AppPage as the home surface.
+Notes: Boots the Cupertino-themed app, renders AppPage as the home surface, and
+allows tests or future bootstrap code to inject the AppPage shell storage.
 
-Path: lib/core/app_page.dart
+Path: lib/core/app_page/app_page.dart
 Feature: app_shell
 Layer: App shell presentation
 Kind: root page widget
-Owner Task: 001A_app_page_switching_shell
-Public Symbols: AppPage, appPagePreview, onboardingPlaceholderPreview, tabBarPlaceholderPreview, fullScreenPanelPreview
-Depends On: flutter/cupertino.dart, common/design/app_colors.dart, common/preview/app_preview.dart
+Owner Task: 001A_app_page_switching_shell, 001B_app_page_shell_persistence, 001C_tabbar_page_items
+Public Symbols: AppPage, AppPageBuilder, appPagePreview, appPageBuilderOnboardingPreview, appPageBuilderTabbarPreview, onboardingPlaceholderPreview, tabBarPlaceholderPreview, fullScreenPanelPreview
+Depends On: dart:async, flutter/cupertino.dart, common/design/app_colors.dart, common/preview/app_preview.dart, core/app_page/app_page_shell_storage.dart, core/tabbar_page/tabbar_page.dart
 Referenced By: lib/main.dart, test/widget_test.dart
 Related Routes: ROUTE-APP-001
+Related Function IDs: FN-APP-002, FN-APP-003
+Related DTO IDs: none
+Related Tests: test/widget_test.dart
+Status: implemented
+Notes: Cupertino view-first shell with persisted onboarding/tabbar toggle.
+AppPage owns state, restores/saves it through AppPageShellStorage, injects the
+real static TabbarPage for the tabbar side, and leaves onboarding as a
+placeholder. AppPageBuilder owns the directional slide transition.
+
+Path: lib/core/app_page/app_page_shell_storage.dart
+Feature: app_shell
+Layer: App shell persistence adapter
+Kind: local preference storage boundary
+Owner Task: 001B_app_page_shell_persistence
+Public Symbols: AppPageShellStorage, SharedPreferencesAppPageShellStorage
+Depends On: shared_preferences/shared_preferences.dart
+Referenced By: lib/main.dart, lib/core/app_page/app_page.dart, test/widget_test.dart
+Related Routes: ROUTE-APP-001
+Related Function IDs: FN-APP-002, FN-APP-003
+Related DTO IDs: none
+Related Tests: test/widget_test.dart
+Status: implemented
+Notes: Stores the temporary `app_page.show_tab_bar` shell preference through
+SharedPreferencesAsync. This is not the final auth/session/onboarding state.
+
+Path: lib/core/tabbar_page/tabbar_page.dart
+Feature: app_shell
+Layer: App shell presentation
+Kind: tab shell widget
+Owner Task: 001C_tabbar_page_items
+Public Symbols: TabbarPage, tabbarPagePreview
+Depends On: flutter/cupertino.dart, common/design/app_colors.dart, common/preview/app_preview.dart, core/chats_page/chats_page.dart, core/explore_page/explore_page.dart, core/profile_page/profile_page.dart
+Referenced By: lib/core/app_page/app_page.dart, test/widget_test.dart
+Related Routes: ROUTE-TAB-002, ROUTE-TAB-003, ROUTE-TAB-004
 Related Function IDs: none yet
 Related DTO IDs: none
 Related Tests: test/widget_test.dart
 Status: implemented
-Notes: Cupertino view-first placeholder shell with local onboarding/tabbar toggle, directional slide transition, and shared widget previews for the page and placeholder components.
+Notes: Provides a CupertinoTabScaffold with three static items: Explore, Chats,
+and Profile. Each tab renders its own placeholder page.
+
+Path: lib/core/explore_page/explore_page.dart
+Feature: app_shell
+Layer: App shell presentation
+Kind: tab content page
+Owner Task: 001C_tabbar_page_items
+Public Symbols: ExplorePage, explorePagePreview
+Depends On: flutter/cupertino.dart, common/preview/app_preview.dart
+Referenced By: lib/core/tabbar_page/tabbar_page.dart
+Related Routes: ROUTE-TAB-002
+Related Function IDs: none yet
+Related DTO IDs: none
+Related Tests: test/widget_test.dart
+Status: implemented
+Notes: Placeholder Explore tab page with a Cupertino navigation title and
+centered page name.
+
+Path: lib/core/chats_page/chats_page.dart
+Feature: app_shell
+Layer: App shell presentation
+Kind: tab content page
+Owner Task: 001C_tabbar_page_items
+Public Symbols: ChatsPage, chatsPagePreview
+Depends On: flutter/cupertino.dart, common/preview/app_preview.dart
+Referenced By: lib/core/tabbar_page/tabbar_page.dart
+Related Routes: ROUTE-TAB-003
+Related Function IDs: none yet
+Related DTO IDs: none
+Related Tests: test/widget_test.dart
+Status: implemented
+Notes: Placeholder Chats tab page with a Cupertino navigation title and
+centered page name.
+
+Path: lib/core/profile_page/profile_page.dart
+Feature: app_shell
+Layer: App shell presentation
+Kind: tab content page
+Owner Task: 001C_tabbar_page_items
+Public Symbols: ProfilePage, profilePagePreview
+Depends On: flutter/cupertino.dart, common/preview/app_preview.dart
+Referenced By: lib/core/tabbar_page/tabbar_page.dart
+Related Routes: ROUTE-TAB-004
+Related Function IDs: none yet
+Related DTO IDs: none
+Related Tests: test/widget_test.dart
+Status: implemented
+Notes: Placeholder Profile tab page with a Cupertino navigation title and
+centered page name.
 
 Path: lib/common/preview/app_preview.dart
 Feature: app_shell
@@ -108,7 +194,7 @@ Kind: shared preview helpers
 Owner Task: 001A_app_page_switching_shell
 Public Symbols: AppPreviewSizes, appPreviewWrapper, AppPagePreview, AppComponentPreview
 Depends On: flutter/cupertino.dart, flutter/widget_previews.dart, common/design/app_colors.dart
-Referenced By: lib/core/app_page.dart and future page/component preview entries
+Referenced By: lib/core/app_page/app_page.dart, lib/core/tabbar_page/tabbar_page.dart, lib/core/explore_page/explore_page.dart, lib/core/chats_page/chats_page.dart, lib/core/profile_page/profile_page.dart, and future page/component preview entries
 Related Routes: all UI routes
 Related Function IDs: none yet
 Related DTO IDs: none
@@ -120,16 +206,18 @@ Path: test/widget_test.dart
 Feature: app_shell
 Layer: Tests
 Kind: widget smoke test
-Owner Task: 001A_app_page_switching_shell
-Public Symbols: AppPage switches from onboarding to tabbar on tap test
-Depends On: flutter_test, main.dart
+Owner Task: 001A_app_page_switching_shell, 001B_app_page_shell_persistence, 001C_tabbar_page_items
+Public Symbols: AppPage switches from onboarding to tabbar on tap test, AppPage restores persisted tabbar state test, TabbarPage renders three static items test
+Depends On: flutter/cupertino.dart, flutter_test, core/app_page/app_page_shell_storage.dart, core/tabbar_page/tabbar_page.dart, main.dart
 Referenced By: flutter test
 Related Routes: ROUTE-APP-001
-Related Function IDs: none yet
+Related Function IDs: FN-APP-002, FN-APP-003
 Related DTO IDs: none
 Related Tests: self
 Status: implemented
-Notes: Verifies the current AppPage placeholder shell interaction and directional mid-transition state.
+Notes: Verifies the current AppPage placeholder shell interaction, directional
+mid-transition state, persisted write, restored tabbar state, and static
+Explore/Chats/Profile tab pages.
 
 Path: lib/common/design/app_colors.dart
 Feature: app_shell

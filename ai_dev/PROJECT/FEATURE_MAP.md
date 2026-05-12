@@ -44,9 +44,9 @@ Status:
 
 | Feature ID | Name | Actor | Owning Feature | Architecture Stage | Routes | State / Controller | Services | Data | Events | Task | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-001 | Flutter AI Chat foundation | user/system | app_shell, common | starter -> view-first | app root | AppPage local shell state | local dependencies | theme/design tokens | none yet | 001A_app_page_switching_shell | implemented |
+| F-001 | Flutter AI Chat foundation | user/system | app_shell, common | starter -> view-first | app root | AppPage persisted temporary shell state | local dependencies | theme/design tokens, shared_preferences shell key | none yet | 001A_app_page_switching_shell, 001B_app_page_shell_persistence | implemented |
 | F-002 | AIChats source-history map | developer | ai_dev | documentation/control plane | none | none | source history reader | commit map | source_step_mapped | 002_aichats_source_history_map | planned |
-| F-003 | App shell and static tabs | user | app_shell | view-first, possibly MV for tab config | root tabs | local tab state | mock dependencies only if needed | tab config | tab_selected, screen_viewed | 003_app_shell_and_static_tabs | planned |
+| F-003 | App shell and static tabs | user | app_shell | view-first | root tabs | CupertinoTabScaffold local tab state | none | static tab config | none yet | 001C_tabbar_page_items | implemented |
 | F-004 | Welcome/onboarding baseline | new user | onboarding | view-first -> MV/MVVM when actions grow | welcome/onboarding | local state or controller | mock user/profile when needed | onboarding state | onboarding_started, onboarding_completed | later source rewrite task | planned |
 | F-005 | Explore/avatar discovery baseline | user | explore, avatar | view-first -> Service when mock data repeats | explore, category list | local state or controller | mock avatar service when justified | avatar summary/list | avatar_viewed, avatar_selected | later source rewrite task | planned |
 | F-006 | Chats list baseline | user | chats | view-first -> Service when sessions are shared | chats tab | local state or controller | mock chat service when justified | chat session summary | chat_opened | later source rewrite task | planned |

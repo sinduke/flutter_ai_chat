@@ -35,7 +35,13 @@ data.
 | `PURCHASES_ENABLED` | purchase/paywall switch | bool | all | false | no | entitlement service | planned |
 | `DEV_SETTINGS_ENABLED` | developer tools availability | bool | mock/dev | true for debug | no | dev settings | planned |
 
-## 5. Secret Policy
+## 5. Local Preference Keys
+
+| Key | Purpose | Type | Default | Sensitive | Owner | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `app_page.show_tab_bar` | temporary AppPage shell preview visibility, similar to SwiftUI AppStorage for the current placeholder shell | bool | false | no | 001B_app_page_shell_persistence | implemented |
+
+## 6. Secret Policy
 
 - AI provider keys must not be committed to Flutter source.
 - Prefer backend proxy or secure platform configuration for production secrets.
@@ -43,7 +49,7 @@ data.
 - Logs must not print provider secrets, raw prompts, raw chat content, or auth
   credentials by default.
 
-## 6. Update Rules
+## 7. Update Rules
 
 Update this file when:
 

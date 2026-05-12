@@ -10,13 +10,19 @@ Every task that adds, moves, or deletes source files must update this file.
 
 ## 2. Current Implementation Status
 
-Status: Flutter view-first root page plus ai_dev Flutter AI Chat preset.
+Status: Flutter view-first root page, narrow shell preference persistence,
+static three-item tabbar page, and ai_dev Flutter AI Chat preset.
 
 Current app source:
 
 ```text
 lib/main.dart
-lib/core/app_page.dart
+lib/core/app_page/app_page.dart
+lib/core/app_page/app_page_shell_storage.dart
+lib/core/tabbar_page/tabbar_page.dart
+lib/core/explore_page/explore_page.dart
+lib/core/chats_page/chats_page.dart
+lib/core/profile_page/profile_page.dart
 lib/common/design/app_colors.dart
 lib/common/design/app_radii.dart
 lib/common/design/app_spacing.dart
@@ -96,8 +102,13 @@ Currently implemented foundation coverage:
 ```text
 lib/main.dart -> CupertinoApp bootstrap with shared colors and AppPage home.
 lib/common/preview/app_preview.dart -> shared Cupertino widget preview wrapper and default page/component preview sizes.
-lib/core/app_page.dart -> Cupertino view-first onboarding/tabbar placeholder shell with shared @AppPagePreview entries.
-test/widget_test.dart -> AppPage toggle smoke test.
+lib/core/app_page/app_page.dart -> Cupertino view-first AppPage state shell, persisted shell state restore/save, reusable AppPageBuilder transition component, TabbarPage injection, and shared @AppPagePreview entries.
+lib/core/app_page/app_page_shell_storage.dart -> SharedPreferencesAsync-backed storage adapter for the temporary AppPage shell preference.
+lib/core/tabbar_page/tabbar_page.dart -> CupertinoTabScaffold with Explore, Chats, and Profile static tab items plus preview.
+lib/core/explore_page/explore_page.dart -> placeholder Explore page with nav title and centered page name.
+lib/core/chats_page/chats_page.dart -> placeholder Chats page with nav title and centered page name.
+lib/core/profile_page/profile_page.dart -> placeholder Profile page with nav title and centered page name.
+test/widget_test.dart -> AppPage toggle, persistence restore, and static tabbar smoke tests.
 ```
 
 ## 5. Planned Feature Modules

@@ -32,8 +32,9 @@ failed
 
 ## 4. AppPage Shell Preview State
 
-This is a temporary local widget state for the first view-first shell. It is not
-the final auth/session state machine.
+This is a temporary local widget state for the first view-first shell. It is now
+restored from `app_page.show_tab_bar`, but it is not the final auth/session or
+onboarding completion state machine.
 
 ```text
 onboarding_preview
@@ -42,10 +43,30 @@ tabbar_preview
 
 | From | To | Trigger | Guard | Side Effects | Status |
 | --- | --- | --- | --- | --- | --- |
-| `onboarding_preview` | `tabbar_preview` | user taps AppPage | none | animate onboarding out left while tabbar enters from right | implemented |
-| `tabbar_preview` | `onboarding_preview` | user taps AppPage | none | animate tabbar out right while onboarding enters from left | implemented |
+| `onboarding_preview` | `tabbar_preview` | AppPage restores persisted true value | `app_page.show_tab_bar == true` | show/animate tabbar preview | implemented |
+| `onboarding_preview` | `tabbar_preview` | user taps AppPage | none | animate onboarding out left while tabbar enters from right; persist `app_page.show_tab_bar=true` | implemented |
+| `tabbar_preview` | `onboarding_preview` | user taps AppPage | none | animate tabbar out right while onboarding enters from left; persist `app_page.show_tab_bar=false` | implemented |
 
 ## 5. Chat Generation State
+
+## 5. TabbarPage Static Tab State
+
+This is the current local placeholder tab state managed by `CupertinoTabScaffold`.
+It is not the final router or analytics state.
+
+```text
+explore
+chats
+profile
+```
+
+| From | To | Trigger | Guard | Side Effects | Status |
+| --- | --- | --- | --- | --- | --- |
+| `explore` | `chats` | user taps Chats tab | none | show Chats placeholder content | implemented |
+| `explore`/`chats` | `profile` | user taps Profile tab | none | show Profile placeholder content | implemented |
+| `chats`/`profile` | `explore` | user taps Explore tab | none | show Explore placeholder content | implemented |
+
+## 6. Chat Generation State
 
 ```text
 idle
@@ -67,7 +88,7 @@ cancelled
 | `sending_user_message`/`waiting_for_ai`/`streaming_ai_reply` | `failed` | service error | retryable/non-retryable mapped | show safe error | planned |
 | `waiting_for_ai`/`streaming_ai_reply` | `cancelled` | user cancels | cancellable operation | stop provider request | planned |
 
-## 6. Entitlement State
+## 7. Entitlement State
 
 ```text
 unknown
